@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.local
+.env*
+!.env.example
+output/
+.tmp/
+.playwright-cli/
+public/art/
+pnpm-lock.yaml
