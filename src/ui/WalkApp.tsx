@@ -115,7 +115,7 @@ export function WalkApp(props: WalkAppProps) {
             <p className="walk-lead">Знакомые улицы, незнакомые повороты. Соберите прогулку под своё настроение.</p>
           </div>
           <div className="walk-art" aria-hidden="true">
-            {/* The supplied reference is kept locally, but excluded from publication until rights are confirmed. */}
+            <img src={`${import.meta.env.BASE_URL}art-reference.png`} alt="" />
             <div className="walk-art-overlay" />
             <span className="walk-art-coordinate">55° С. Ш. / 73° В. Д.</span>
             <span className="walk-art-stamp">✳</span>

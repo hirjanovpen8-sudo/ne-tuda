@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as maplibregl from 'maplibre-gl';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import type { Coordinate } from './planner';
 
@@ -13,6 +14,7 @@ export default function MapView({ start, geometry, position, onSelect, onError }
   const report = useRef(onError); report.current = onError;
   useEffect(() => {
     if (!container.current) return;
+    maplibregl.setWorkerUrl(maplibreWorkerUrl);
     let m: maplibregl.Map;
     try { m = new maplibregl.Map({ container: container.current, style: 'https://tiles.openfreemap.org/styles/dark', center: [73.3686, 54.9885], zoom: 12, locale: { 'NavigationControl.ZoomIn': 'Приблизить', 'NavigationControl.ZoomOut': 'Отдалить', 'NavigationControl.ResetBearing': 'Сбросить ориентацию на север', 'AttributionControl.ToggleAttribution': 'Показать сведения об источниках карты', 'Map.Title': 'Карта', 'Marker.Title': 'Маркер карты' } }); }
     catch (error) { report.current(error instanceof Error ? `Не удалось создать карту: ${error.message}` : 'Не удалось создать карту.'); return; }
@@ -34,6 +36,9 @@ export default function MapView({ start, geometry, position, onSelect, onError }
     else positionMarker.current.setLngLat([position[0], position[1]]);
   }, [position]);
   useEffect(() => {
+    const m = map.current; if (!m) return;
+    const update = () => {
+      const data = { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: geometry ? geometry.map(p => [p[0], p[1]]) : [] } };  useEffect(() => {
     const m = map.current; if (!m) return;
     const update = () => {
       const data = { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: geometry ? geometry.map(p => [p[0], p[1]]) : [] } };
