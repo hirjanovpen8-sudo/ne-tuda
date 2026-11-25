@@ -38,9 +38,6 @@ export default function MapView({ start, geometry, position, onSelect, onError }
   useEffect(() => {
     const m = map.current; if (!m) return;
     const update = () => {
-      const data = { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: geometry ? geometry.map(p => [p[0], p[1]]) : [] } };  useEffect(() => {
-    const m = map.current; if (!m) return;
-    const update = () => {
       const data = { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: geometry ? geometry.map(p => [p[0], p[1]]) : [] } };
       const source = m.getSource('walk-route') as maplibregl.GeoJSONSource | undefined;
       if (source) source.setData(data);
